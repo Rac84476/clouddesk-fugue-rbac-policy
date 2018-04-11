@@ -23,9 +23,14 @@ node {
             sh(script: "lwc Policy.lw")
           }
 
-          /* Apply policy to the Fugue Conductor */
-          stage("Apply Policy") {
-            sh(script: "fugue policy rbac-attach Policy.lw")
+          /* Snapshot the policy */
+          stage("Snapshot Policy") {
+            sh(script: "lwc -s snapshot Policy.lw -o Policy.tar.gz")
+          }
+
+          /* Publish the policy to EWC */
+          stage("Publish Policy") {
+            sh(script: "curl -h")
           }
         }
       }
