@@ -41,6 +41,7 @@ pipeline {
                        -H "content-type: application/x-www-form-urlencoded" \
                        --data "username=$EWC_USER_NAME&password=$EWC_USER_PASS&client_id=fugue_enterprise_web_console&grant_type=password" \
                        | jq -r .access_token )
+          curl https://$EWC_DNSNAME/rbac/policies -F "snapshot=@Policy.tar.gz" -H "accept: application/json" -H "authorization: Bearer $TOKEN"
         '''  
       }
     }
