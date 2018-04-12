@@ -36,6 +36,7 @@ pipeline {
       }
       steps {
         sh "lwc -s snapshot Policy.lw -o Policy.tar.gz"
+
         def accessToken = sh(returnStdout: true, script: """
           curl -s -X POST "https://$EWC_DNSNAME/oidc/token" \
             -H "content-type: application/x-www-form-urlencoded" \
@@ -44,6 +45,7 @@ pipeline {
         """).trim()
 
         echo accessToken
+
       }
     }
   }
