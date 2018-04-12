@@ -36,7 +36,21 @@ pipeline {
       }
       steps {
         sh "lwc -s snapshot Policy.lw -o Policy.tar.gz"
-        def ret = sh(returnStdout: true, script: 'curl -s -X POST "https://$EWC_DNSNAME/oidc/token" -H "content-type: application/x-www-form-urlencoded" --data "username=$EWC_USER_NAME&password=$EWC_USER_PASS&client_id=fugue_enterprise_web_console&grant_type=password" | jq -r .access_token')
+
+        script {
+          def accessToken = sh(returnStdout: true, script: """
+            curl -s -X POST "https://$EWC_DNSNAME/oidc/token" \
+              -H "content-type: application/x-www-form-urlencoded" \
+              --data "username=$EWC_USER_NAME&password=$EWC_USER_PASS&client_id=fugue_enterprise_web_console&grant_type=password" \
+            | jq -r .access_token
+          """).trim()
+
+          echo accessToken
+
+         sh curl "https://ewc-api.fugue.cloud/rbac/policies" -F "snapshot=@Policy.tar.gz" -H "accept: application/json" -H "authorization: Bearer OGU3MDU0ODktNDNlZS00YzI0LThmOGUtNzA2OTgyY2Q3NzVlJO1Q6VGqpgYkI3UQtbTMcdi94aW67LgJlIBCmCuihImD1n856qkK5p7P5rJV3HBIr7IqzzuU1hJUMb-jt5Bacw" 
+        }
+
+
       }
     }
   }
