@@ -45,8 +45,9 @@ pipeline {
             | jq -r .access_token
           """).trim()
 
-          echo accessToken
         }
+
+        echo accessToken
 
       }
     }
