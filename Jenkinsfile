@@ -36,7 +36,7 @@ pipeline {
       }
       steps {
         script {
-          def ret = sh(script: 'curl -s -X POST "https://$EWC_DNSNAME/oidc/token" -H "content-type: application/x-www-form-urlencoded" --data "$EWC_USER_NAME&password=$EWC_USER_PASS&client_id=fugue_enterprise_web_console&grant_type=password"', returnStdout: true)
+          def ret = sh(script: 'curl -s -X POST 'https://ewc-api.fugue.cloud/oidc/token' -H 'content-type: application/x-www-form-urlencoded' --data 'username=jonathan@fugue.co&password=asdfasdf&client_id=fugue_enterprise_web_console&grant_type=password'', returnStdout: true)
           echo ret
         }
       }
