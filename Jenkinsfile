@@ -45,6 +45,8 @@ pipeline {
           """).trim()
 
           echo accessToken
+
+         sh curl "https://ewc-api.fugue.cloud/rbac/policies" -F "snapshot=@Policy.tar.gz" -H "accept: application/json" -H "authorization: Bearer OGU3MDU0ODktNDNlZS00YzI0LThmOGUtNzA2OTgyY2Q3NzVlJO1Q6VGqpgYkI3UQtbTMcdi94aW67LgJlIBCmCuihImD1n856qkK5p7P5rJV3HBIr7IqzzuU1hJUMb-jt5Bacw" 
         }
       }
     }
