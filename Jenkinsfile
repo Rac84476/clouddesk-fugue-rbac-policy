@@ -36,7 +36,7 @@ pipeline {
       }
       steps {
         sh "lwc -s snapshot Policy.lw -o Policy.tar.gz"
-        sh script: '''
+        ret = sh script: '''
           TOKEN=$(curl -s -X POST "https://$EWC_DNSNAME/oidc/token" \
                        -H "content-type: application/x-www-form-urlencoded" \
                        --data "username=$EWC_USER_NAME&password=$EWC_USER_PASS&client_id=fugue_enterprise_web_console&grant_type=password" \
