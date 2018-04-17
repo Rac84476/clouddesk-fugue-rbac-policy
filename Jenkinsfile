@@ -6,8 +6,8 @@ pipeline {
     FUGUE_LWC_OPTIONS = "true"
     AWS_DEFAULT_REGION = "us-east-1"
     EWC_DNSNAME = "ewc-api.fugue.cloud"
-    EWC_USER_NAME = "jonathan@fugue.co"
-    EWC_USER_PASS = "asdfasdf"
+    EWC_USER_NAME = credentials("EWC_USER_NAME")
+    EWC_USER_PASS = credentials("EWC_USER_PASS")
   }
   agent {
     docker {
@@ -20,14 +20,6 @@ pipeline {
     stage("Validate Policy") {
       steps {
         sh "lwc Policy.lw"
-      }
-    }
-    stage("Approve Policy") {
-      when {
-        branch "master"
-      }
-      steps {
-        input "Please review and approve this change"
       }
     }
     stage("Apply Policy") {
